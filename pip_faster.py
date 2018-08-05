@@ -69,6 +69,13 @@ class CACHE(object):
     wheelhouse = os.path.join(_cache_dir, 'pip-faster', 'wheelhouse')
     pip_wheelhouse = os.path.join(_cache_dir, 'pip', 'wheels')
 
+    @classmethod
+    def index_url_dir(cls, index_url):
+        return os.path.join(
+            cls.wheelhouse,
+            index_url.replace(':', ''),
+        )
+
 
 def ignorecase_glob(glob):
     return ''.join([
@@ -83,7 +90,7 @@ def optimistic_wheel_search(req, index_urls):
 
     for index_url in index_urls:
         expected_location = os.path.join(
-            CACHE.wheelhouse, index_url, ignorecase_glob(name) + '-*.whl',
+            CACHE.index_url_dir(index_url), ignorecase_glob(name) + '-*.whl',
         )
         for link in glob.glob(expected_location):
             link = Link('file:' + link)
@@ -156,7 +163,7 @@ def mkdirp(pth):
 
 def _store_wheel_in_cache(file_path, index_url):
     filename = os.path.basename(file_path)
-    cache = os.path.join(CACHE.wheelhouse, index_url, filename)
+    cache = os.path.join(CACHE.index_url_dir(index_url), filename)
     cache_tmp = '{}.{}'.format(cache, random.randint(0, sys.maxsize))
     cache_dir = os.path.dirname(cache)
     mkdirp(cache_dir)
