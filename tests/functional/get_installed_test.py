@@ -49,8 +49,8 @@ def test_pip_get_installed(tmpdir):
         '-e', 'git+git://github.com/bukzor/pytest-cov.git@master#egg=pytest-cov',
     )
     expected = [
-        'attrs', 'cov-core', 'coverage', 'more-itertools', 'pluggy', 'py',
-        'pytest', 'pytest-cov', 'six',
+        'atomicwrites', 'attrs', 'cov-core', 'coverage', 'more-itertools',
+        'pluggy', 'py', 'pytest', 'pytest-cov', 'six',
     ]
     if PY2:  # :pragma:nocover:
         expected.insert(3, 'funcsigs')
