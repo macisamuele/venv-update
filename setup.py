@@ -48,6 +48,7 @@ def main():
             'Programming Language :: Python :: Implementation :: PyPy',
             'Topic :: System :: Archiving :: Packaging',
             'Operating System :: Unix',
+            'Operating System :: Microsoft :: Windows',
             'Intended Audience :: Developers',
             'Development Status :: 4 - Beta',
             'Environment :: Console',
