@@ -1,0 +1,43 @@
+version: '{build}'
+image: Visual Studio 2017
+
+matrix:
+  allow_failures:
+  # Add ALLOW_FAILURE env variable to the matrix tasks that failures could be ignored
+  - ALLOW_FAILURE: 'true'
+
+environment:
+  matrix:
+  # Available python versions and their locations on https://www.appveyor.com/docs/build-environment/#python
+  - PYTHON: C:\Python36-x64
+    TOXENV: lint-windows
+  - PYTHON: C:\Python27-x64
+    TOXENV: lint-windows
+  - PYTHON: C:\Python36-x64
+    TOXENV: py36-windows
+  - PYTHON: C:\Python27-x64
+    TOXENV: py27-windows
+  - PYTHON: C:\Python35-x64
+    TOXENV: py35-windows
+  - PYTHON: C:\Python36-x64
+    TOXENV: latest-pip-windows
+    ALLOW_FAILURE: 'true'
+
+build: off
+
+install:
+- cmd: SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
+- cmd: pip install tox
+
+before_test:
+- cmd: python --version
+- cmd: pip --version
+- cmd: tox --version
+
+test_script:
+- cmd: tox
+
+
+cache:
+- '%USERPROFILE%\.cache\pip'
+- '%USERPROFILE%\.cache\pre-commit'
